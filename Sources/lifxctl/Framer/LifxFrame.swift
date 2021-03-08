@@ -12,8 +12,6 @@ private var rng = SystemRandomNumberGenerator()
 struct LifxFrame {
     static let source: UInt32 = rng.next(upperBound: UInt32.max)
 
-    var size: Measurement<UnitInformationStorage> = Measurement(value: 0, unit: UnitInformationStorage.bytes)
-
     let `protocol`: UInt16 = 1024
 
     let addressable = true

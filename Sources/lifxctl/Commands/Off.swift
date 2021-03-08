@@ -20,18 +20,6 @@ struct Off: ParsableCommand {
     @Argument(help: "Duration in milliseconds") var duration: UInt32 = 0
 
     func run() throws {
-        let message = NWProtocolFramer.Message(definition: LifxFramer.definition)
-
-        var frame = LifxFrame()
-        frame.tagged = true
-        message.frame = frame
-        message.frameAddress = LifxFrameAddress(target: 0)
-        message.protocolHeader = LifxProtocolHeader.setPower
-
-        let context = NWConnection.ContentContext(
-            identifier: "Light::SetPower",
-            metadata: [message])
-
         var contentBytes = [UInt8]()
         var level = UInt16.zero
         var duration = self.duration
@@ -44,16 +32,11 @@ struct Off: ParsableCommand {
         }
         let content = Data(bytes: contentBytes, count: contentBytes.count)
 
-        let parameters = NWParameters.udp
-        parameters
-            .defaultProtocolStack
-            .applicationProtocols
-            .insert(NWProtocolFramer.Options(definition: LifxFramer.definition), at: 0)
         let host = NWEndpoint.lifx(string: address)
-        let connection = NWConnection(to: host, using: parameters)
+        let connection = NWConnection(to: host, using: .lifx)
 
         connection.start(queue: .main)
-        connection.send(content: content, contentContext: context, isComplete: true, completion: .contentProcessed({ error in
+        connection.send(content: content, contentContext: .setPower, isComplete: true, completion: .contentProcessed({ error in
             logger.debug("content processed with error = \(String(describing: error), privacy: .public)")
             Off.exit(withError: error)
         }))

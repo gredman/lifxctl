@@ -22,4 +22,16 @@ extension NWProtocolFramer.Message {
         get { self["protocolHeader"] as? LifxProtocolHeader }
         set { self["protocolHeader"] = newValue }
     }
+
+    static var setPower: NWProtocolFramer.Message {
+        let message = NWProtocolFramer.Message(definition: LifxFramer.definition)
+
+        var frame = LifxFrame()
+        frame.tagged = true
+        message.frame = frame
+        message.frameAddress = LifxFrameAddress(target: 0)
+        message.protocolHeader = LifxProtocolHeader.setPower
+
+        return message
+    }
 }
