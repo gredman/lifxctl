@@ -20,7 +20,9 @@ struct Off: ParsableCommand {
     @Argument(help: "Duration in milliseconds") var duration: UInt32 = 0
 
     func run() throws {
-        let payload = Data(UInt16.zero, self.duration)
+        var payload = Data()
+        payload.appendBytes(of: UInt16.zero)
+        payload.appendBytes(of: duration)
 
         let host = NWEndpoint.lifx(string: address)
         let connection = NWConnection(to: host, using: .lifx)

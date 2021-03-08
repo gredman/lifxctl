@@ -24,7 +24,13 @@ struct SetColor: ParsableCommand {
     @Option(help: "Duration in milliseconds") var duration: UInt32 = 0
 
     func run() throws {
-        let payload = Data(UInt8.zero, hue.uint16, saturation.uint16, brightness.uint16, kelvin.uint16, duration)
+        var payload = Data()
+        payload.appendBytes(of: UInt8.zero)
+        payload.appendBytes(of: hue.uint16)
+        payload.appendBytes(of: saturation.uint16)
+        payload.appendBytes(of: brightness.uint16)
+        payload.appendBytes(of: kelvin.uint16)
+        payload.appendBytes(of: duration)
 
         let host = NWEndpoint.lifx(string: address)
         let connection = NWConnection(to: host, using: .lifx)
