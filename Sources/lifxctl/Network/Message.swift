@@ -34,4 +34,16 @@ extension NWProtocolFramer.Message {
 
         return message
     }
+
+    static var setColor: NWProtocolFramer.Message {
+        let message = NWProtocolFramer.Message(definition: LifxFramer.definition)
+
+        var frame = LifxFrame()
+        frame.tagged = true
+        message.frame = frame
+        message.frameAddress = LifxFrameAddress(target: 0)
+        message.protocolHeader = LifxProtocolHeader.setColor
+
+        return message
+    }
 }

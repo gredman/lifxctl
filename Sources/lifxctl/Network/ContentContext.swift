@@ -14,4 +14,11 @@ extension NWConnection.ContentContext {
             identifier: "Light::SetPower",
             metadata: [message])
     }
+
+    static var setColor: NWConnection.ContentContext {
+        let message = NWProtocolFramer.Message.setColor
+        return NWConnection.ContentContext(
+            identifier: "Light::SetColor",
+            metadata: [message])
+    }
 }

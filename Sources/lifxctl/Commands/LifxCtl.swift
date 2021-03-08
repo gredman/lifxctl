@@ -13,6 +13,7 @@ struct LifxCtl: ParsableCommand {
         version: "0.0.0",
         subcommands: [
             On.self,
-            Off.self
+            Off.self,
+            SetColor.self
         ])
 }
