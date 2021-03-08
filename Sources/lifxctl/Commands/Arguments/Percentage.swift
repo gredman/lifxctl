@@ -10,7 +10,7 @@ import ArgumentParser
 struct Percentage: ExpressibleByArgument {
     let rawValue: Int
 
-    static let range: ClosedRange<Int> = 0...100
+    static let range = 0...100
 
     init(rawValue: Int) {
         self.rawValue = rawValue
