@@ -8,6 +8,13 @@
 import Network
 
 extension NWConnection.ContentContext {
+    static var get: NWConnection.ContentContext {
+        let message = NWProtocolFramer.Message.get
+        return NWConnection.ContentContext(
+            identifier: "Light::Get",
+            metadata: [message])
+    }
+
     static var setPower: NWConnection.ContentContext {
         let message = NWProtocolFramer.Message.setPower
         return NWConnection.ContentContext(

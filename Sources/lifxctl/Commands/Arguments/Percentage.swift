@@ -16,6 +16,11 @@ struct Percentage: ExpressibleByArgument {
         self.rawValue = rawValue
     }
 
+    init(uint16: UInt16) {
+        self.rawValue = Self.range.lowerBound
+            + Int((Double(uint16) / Double(UInt16.max) * Double(Self.range.size)).rounded())
+    }
+
     init?(argument: String) {
         if let value = Int(argument), Self.range ~= value {
             rawValue = value

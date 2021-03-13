@@ -12,6 +12,7 @@ struct LifxCtl: ParsableCommand {
         abstract: "Control lifx bulbs",
         version: "0.0.0",
         subcommands: [
+            Get.self,
             On.self,
             Off.self,
             SetColor.self

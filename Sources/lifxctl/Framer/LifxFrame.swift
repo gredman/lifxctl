@@ -12,13 +12,13 @@ private var rng = SystemRandomNumberGenerator()
 struct LifxFrame {
     static let source: UInt32 = rng.next(upperBound: UInt32.max)
 
-    let `protocol`: UInt16 = 1024
+    var `protocol`: UInt16 = 1024
 
-    let addressable = true
+    var addressable = true
 
     var tagged = false
 
-    let origin = 0
+    var origin: UInt8 = 0
 
-    let source: UInt32 = LifxFrame.source
+    var source: UInt32 = LifxFrame.source
 }

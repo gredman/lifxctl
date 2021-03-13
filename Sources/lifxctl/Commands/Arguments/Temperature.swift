@@ -16,6 +16,10 @@ struct Temperature: ExpressibleByArgument {
         self.rawValue = rawValue
     }
 
+    init(uint16: UInt16) {
+        self.rawValue = Int(uint16)
+    }
+
     init?(argument: String) {
         if let value = Int(argument), Self.range ~= value {
             rawValue = value

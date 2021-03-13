@@ -27,18 +27,35 @@ class LifxFramer: NWProtocolFramerImplementation {
 
     func handleInput(framer: NWProtocolFramer.Instance) -> Int {
         logger.debug("handling input")
-        framer.parseInput(minimumIncompleteLength: 0, maximumLength: .max) { bytes, end in
-            guard let bytes = bytes else { return 0 }
-//            for byte in bytes {
-//                logger.debug("\(byte, format: .hex)")
-//            }
+        _ = framer.parseInput(minimumIncompleteLength: 0, maximumLength: .max) { input, end in
+            guard let input = input else { return 0 }
 
-            let string = bytes.map {
+            let string = input.map {
                 String(format: "%02x", $0)
             }.joined()
             logger.debug("\(string, privacy: .public)")
 
-            return 0
+            var bytes = ByteReader(input: input)
+            let size = bytes.readUInt16()
+            logger.debug("message should be \(size)")
+
+            guard input.count == size else {
+                logger.debug("incomplete message of \(input.count)B")
+                return 0
+            }
+
+            let frame = bytes.readFrame()
+            let frameAddress = bytes.readFrameAddress()
+            let protocolHeader = bytes.readProtocolHeader()
+
+            let message = NWProtocolFramer.Message(definition: LifxFramer.definition)
+            message.frame = frame
+            message.frameAddress = frameAddress
+            message.protocolHeader = protocolHeader
+
+            _ = framer.deliverInputNoCopy(length: Int(size), message: message, isComplete: true)
+
+            return Int(bytes.index)
         }
         return 0
     }
@@ -154,5 +171,67 @@ class LifxFramer: NWProtocolFramerImplementation {
 
     func cleanup(framer: NWProtocolFramer.Instance) {
         logger.debug("cleaning")
+    }
+}
+
+extension UInt8 {
+    func has(bit index: UInt8) -> Bool {
+        bit(at: index) == 1
+    }
+
+    func bit(at index: UInt8) -> UInt8 {
+        (self & (1 << index)) >> index
+    }
+}
+
+private extension ByteReader {
+    mutating func readFrame() -> LifxFrame {
+        let protocolLow = readUInt8()
+        let protocolHigh = readUInt8()
+        let proto = UInt16(protocolLow) + (UInt16(protocolHigh) >> 4) << 12
+
+        let addressable = protocolHigh.has(bit: 3)
+        let tagged = protocolHigh.has(bit: 2)
+
+        let origin = protocolHigh.bit(at: 6) + protocolHigh.bit(at: 7) << 1
+
+        let source = readUInt32()
+
+        return LifxFrame(protocol: proto, addressable: addressable, tagged: tagged, origin: origin, source: source)
+    }
+
+    mutating func readFrameAddress() -> LifxFrameAddress {
+        let target = LifxFrameAddress.Target(byte0: readUInt8(),
+            byte1: readUInt8(),
+            byte2: readUInt8(),
+            byte3: readUInt8(),
+            byte4: readUInt8(),
+            byte5: readUInt8(),
+            byte6: readUInt8(),
+            byte7: readUInt8())
+
+        // reserved
+        skip(count: 6)
+
+        let responseAcknowledgement = readUInt8()
+        let responseRequired = responseAcknowledgement.has(bit: 0)
+        let acknowledgementRequired = responseAcknowledgement.has(bit: 1)
+
+        let sequence = readUInt8()
+
+        return LifxFrameAddress(target: target,
+            responseRequired: responseRequired, acknowledgementRequired: acknowledgementRequired, sequence: sequence)
+    }
+
+    mutating func readProtocolHeader() -> LifxProtocolHeader {
+        // reserved
+        skip(type: UInt64.self)
+
+        let type = readUInt16()
+
+        // reserved
+        skip(type: UInt16.self)
+
+        return  LifxProtocolHeader(type: type)
     }
 }

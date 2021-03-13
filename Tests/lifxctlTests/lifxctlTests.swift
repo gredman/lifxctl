@@ -1,6 +1,5 @@
-    import XCTest
-    @testable import lifxctl
+import XCTest
 
-    final class lifxctlTests: XCTestCase {
+final class lifxctlTests: XCTestCase {
 
-    }
+}
