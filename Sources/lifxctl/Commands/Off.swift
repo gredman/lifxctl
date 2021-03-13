@@ -15,7 +15,7 @@ private let logger = Logger(category: "Off")
 struct Off: ParsableCommand {
     static let configuration = CommandConfiguration(abstract: "Turn bulb off")
 
-    @Argument(help: "Address") var address: String
+    @Argument(help: "Address") var address = IPv4Address.broadcast
 
     @Argument(help: "Duration in milliseconds") var duration: UInt32 = 0
 
@@ -24,7 +24,7 @@ struct Off: ParsableCommand {
         payload.appendBytes(of: UInt16.zero)
         payload.appendBytes(of: duration)
 
-        let host = NWEndpoint.lifx(string: address)
+        let host = NWEndpoint.hostPort(host: .ipv4(address), port: .lifxPort)
         let connection = NWConnection(to: host, using: .lifx)
 
         connection.start(queue: .main)

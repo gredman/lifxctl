@@ -15,7 +15,7 @@ private let logger = Logger(category: "SetColor")
 struct SetColor: ParsableCommand {
     static let configuration = CommandConfiguration(abstract: "Turn bulb on")
 
-    @Argument(help: "Address") var address: String
+    @Argument(help: "Address") var address = IPv4Address.broadcast
 
     @Option(help: "Hue") var hue = Angle(rawValue: 0)
     @Option(help: "Saturation") var saturation = Percentage(rawValue: 100)
@@ -32,7 +32,7 @@ struct SetColor: ParsableCommand {
         payload.appendBytes(of: kelvin.uint16)
         payload.appendBytes(of: duration)
 
-        let host = NWEndpoint.lifx(string: address)
+        let host = NWEndpoint.hostPort(host: .ipv4(address), port: .lifxPort)
         let connection = NWConnection(to: host, using: .lifx)
 
         connection.start(queue: .main)
