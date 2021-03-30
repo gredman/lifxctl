@@ -1,10 +1,3 @@
-//
-//  LifxProtocolHeader.swift
-//  
-//
-//  Created by Gareth Redman on 7/03/21.
-//
-
 import Foundation
 
 struct LifxProtocolHeader {

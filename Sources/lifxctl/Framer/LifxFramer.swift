@@ -1,10 +1,3 @@
-//
-//  Framer.swift
-//  
-//
-//  Created by Gareth Redman on 7/03/21.
-//
-
 import Foundation
 import Network
 import os

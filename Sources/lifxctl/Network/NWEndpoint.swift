@@ -1,10 +1,3 @@
-//
-//  NWEndpoint.swift
-//  
-//
-//  Created by Gareth Redman on 8/03/21.
-//
-
 import Network
 
 extension NWEndpoint.Port {

@@ -1,10 +1,3 @@
-//
-//  IPv4Address.swift
-//
-//
-//  Created by Gareth Redman on 13/03/21.
-//
-
 import ArgumentParser
 import Network
 

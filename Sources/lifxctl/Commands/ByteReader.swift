@@ -1,10 +1,3 @@
-//
-//  ByteReader.swift
-//  
-//
-//  Created by Gareth Redman on 13/03/21.
-//
-
 import Foundation
 
 struct ByteReader {

@@ -1,10 +1,3 @@
-//
-//  Get.swift
-//  
-//
-//  Created by Gareth Redman get 9/03/21.
-//
-
 import ArgumentParser
 import Foundation
 import Network

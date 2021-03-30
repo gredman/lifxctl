@@ -1,10 +1,3 @@
-//
-//  LifxFrame.swift
-//  
-//
-//  Created by Gareth Redman on 7/03/21.
-//
-
 import Foundation
 
 private var rng = SystemRandomNumberGenerator()
