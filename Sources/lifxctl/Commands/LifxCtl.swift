@@ -9,12 +9,12 @@ import ArgumentParser
 
 struct LifxCtl: ParsableCommand {
     static let configuration = CommandConfiguration(
+        commandName: "lifxctl",
         abstract: "Control lifx bulbs",
         version: "0.0.0",
         subcommands: [
             Get.self,
-            On.self,
-            Off.self,
+            SetPower.self,
             SetColor.self
         ])
 }
