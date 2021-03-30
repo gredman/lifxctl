@@ -15,7 +15,7 @@ private let logger = Logger(category: "SetColor")
 struct SetColor: ParsableCommand {
     static let configuration = CommandConfiguration(abstract: "Turn bulb on")
 
-    @Argument(help: "Address") var address = IPv4Address.broadcast
+    @Option(help: "Address") var address = IPv4Address.broadcast
 
     @Option(help: "Hue") var hue = Angle(rawValue: 0)
     @Option(help: "Saturation") var saturation = Percentage(rawValue: 100)

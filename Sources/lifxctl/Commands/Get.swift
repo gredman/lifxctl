@@ -15,7 +15,7 @@ private let logger = Logger(category: "Get")
 struct Get: ParsableCommand {
     static let configuration = CommandConfiguration(abstract: "Get current light state")
 
-    @Argument(help: "Address") var address: String
+    @Option(help: "Address") var address: String
 
     func run() throws {
         let host = NWEndpoint.lifx(string: address)

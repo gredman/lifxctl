@@ -15,9 +15,9 @@ private let logger = Logger(category: "On")
 struct On: ParsableCommand {
     static let configuration = CommandConfiguration(abstract: "Turn bulb on")
 
-    @Argument(help: "Address") var address = IPv4Address.broadcast
+    @Option(help: "Address") var address = IPv4Address.broadcast
 
-    @Argument(help: "Duration in milliseconds") var duration: UInt32 = 0
+    @Option(help: "Duration in milliseconds") var duration: UInt32 = 0
 
     func run() throws {
         var payload = Data()
