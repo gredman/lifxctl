@@ -17,7 +17,28 @@ struct Angle: ExpressibleByArgument {
     init?(argument: String) {
         if let value = Int(argument), Self.range ~= value {
             rawValue = value
+        } else if let angle = Self(name: argument) {
+            self = angle
         } else {
+            return nil
+        }
+    }
+
+    private init?(name: String) {
+        switch name {
+        case "red":
+            rawValue = 0
+        case "yellow":
+            rawValue = 45
+        case "green":
+            rawValue = 120
+        case "blue":
+            rawValue = 180
+        case "purple":
+            rawValue = 225
+        case "pink":
+            rawValue = 315
+        default:
             return nil
         }
     }
