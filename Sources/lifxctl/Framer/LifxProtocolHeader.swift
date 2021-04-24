@@ -6,5 +6,6 @@ struct LifxProtocolHeader {
     static let getService = LifxProtocolHeader(type: 2)
     static let get = LifxProtocolHeader(type: 101)
     static let setColor = LifxProtocolHeader(type: 102)
+    static let setWaveform = LifxProtocolHeader(type: 103)
     static let setPower = LifxProtocolHeader(type: 117)
 }

@@ -51,4 +51,16 @@ extension NWProtocolFramer.Message {
 
         return message
     }
+    
+    static var setWaveform: NWProtocolFramer.Message {
+        let message = NWProtocolFramer.Message(definition: LifxFramer.definition)
+
+        var frame = LifxFrame()
+        frame.tagged = true
+        message.frame = frame
+        message.frameAddress = LifxFrameAddress()
+        message.protocolHeader = LifxProtocolHeader.setWaveform
+
+        return message
+    }
 }

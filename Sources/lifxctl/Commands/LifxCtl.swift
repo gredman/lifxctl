@@ -8,6 +8,7 @@ struct LifxCtl: ParsableCommand {
         subcommands: [
             Get.self,
             SetPower.self,
-            SetColor.self
+            SetColor.self,
+            SetWaveform.self
         ])
 }

@@ -21,4 +21,11 @@ extension NWConnection.ContentContext {
             identifier: "Light::SetColor",
             metadata: [message])
     }
+    
+    static var setWaveform: NWConnection.ContentContext {
+        let message = NWProtocolFramer.Message.setWaveform
+        return NWConnection.ContentContext(
+            identifier: "Light::SetColor",
+            metadata: [message])
+    }
 }
