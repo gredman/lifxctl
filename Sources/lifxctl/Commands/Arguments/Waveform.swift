@@ -1,6 +1,6 @@
 import ArgumentParser
 
-enum Waveform: String, ExpressibleByArgument {
+enum Waveform: String, ExpressibleByArgument, CaseIterable {
     case saw
     case sine
     case halfSine
@@ -15,5 +15,9 @@ enum Waveform: String, ExpressibleByArgument {
         case .triangle: return 3
         case .pulse: return 4
         }
+    }
+
+    static var allValueStrings: [String] {
+        allCases.map(\.rawValue)
     }
 }

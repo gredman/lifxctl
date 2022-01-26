@@ -18,7 +18,7 @@ struct SetWaveform: ParsableCommand {
     @Option(help: "Period in milliseconds") var period: UInt32
     @Option(help: "Cycles") var cycles: Float32 = 1
     @Option(help: "Skew ratio") var skewRatio: SkewRatio = 0.5
-    @Option(help: "Waveform") var waveform: Waveform = .sine
+    @Option(help: "Waveform (allowed: \(Waveform.allValueStrings.joined(separator: ", ")))") var waveform: Waveform = .sine
 
     func run() throws {
         var payload = Data()
