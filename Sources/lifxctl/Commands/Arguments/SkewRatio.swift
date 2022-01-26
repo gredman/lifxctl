@@ -1,6 +1,6 @@
 import ArgumentParser
 
-struct SkewRatio: ExpressibleByArgument, ExpressibleByFloatLiteral {
+struct SkewRatio: ExpressibleByArgument, ExpressibleByFloatLiteral, CustomStringConvertible {
     let rawValue: Double
 
     static let range: ClosedRange<Double> = 0...1
@@ -21,5 +21,9 @@ struct SkewRatio: ExpressibleByArgument, ExpressibleByFloatLiteral {
         Int16(
             (Double(rawValue) - Double(Self.range.size)/2)
             * (Double(Int16.max) - Double(Int16.min)))
+    }
+
+    var description: String {
+        String(rawValue)
     }
 }

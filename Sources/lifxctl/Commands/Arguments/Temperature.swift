@@ -1,6 +1,6 @@
 import ArgumentParser
 
-struct Temperature: ExpressibleByArgument {
+struct Temperature: ExpressibleByArgument, CustomStringConvertible {
     let rawValue: Int
 
     static let range = 2500...9000
@@ -23,5 +23,9 @@ struct Temperature: ExpressibleByArgument {
 
     var uint16: UInt16 {
         UInt16(rawValue)
+    }
+
+    var description: String {
+        String(rawValue) + "K"
     }
 }

@@ -1,6 +1,6 @@
 import ArgumentParser
 
-struct Angle: ExpressibleByArgument {
+struct Angle: ExpressibleByArgument, CustomStringConvertible {
     let rawValue: Int
 
     static let range = 0...360
@@ -45,5 +45,9 @@ struct Angle: ExpressibleByArgument {
 
     var uint16: UInt16 {
         UInt16(Int(UInt16.max) * rawValue / Self.range.size)
+    }
+
+    var description: String {
+        String(rawValue) + "°"
     }
 }

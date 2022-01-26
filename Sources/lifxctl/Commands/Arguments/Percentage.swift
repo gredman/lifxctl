@@ -1,6 +1,6 @@
 import ArgumentParser
 
-struct Percentage: ExpressibleByArgument {
+struct Percentage: ExpressibleByArgument, CustomStringConvertible {
     let rawValue: Int
 
     static let range = 0...100
@@ -24,5 +24,9 @@ struct Percentage: ExpressibleByArgument {
 
     var uint16: UInt16 {
         UInt16(Int(UInt16.max) * rawValue / Self.range.size)
+    }
+
+    var description: String {
+        String(rawValue) + "%"
     }
 }
